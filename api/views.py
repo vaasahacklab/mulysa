@@ -69,7 +69,7 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         # nothing found, 480
         if qs.count() == 0:
-            return Response(status=status.480)
+            return Response(status=480)
 
         # multiple users found. this cannot work...
         if qs.count() != 1:
@@ -83,10 +83,10 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         # user does not have access rights
         if not user.is_active:
-            return Response(status=status.481)
+            return Response(status=481)
 
         if not user.has_door_access():
-            return Response(status=status.481)
+            return Response(status=481)
 
         outserializer = UserAccessSerializer(user)
         return Response(outserializer.data)
