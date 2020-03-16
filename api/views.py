@@ -69,7 +69,7 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         # nothing found, 480
         if qs.count() == 0:
-            return Response(status=480, reason_phrase="Number not found")
+            return Response(status=480)
 
         # multiple users found. this cannot work...
         if qs.count() != 1:
