@@ -57,7 +57,7 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         # check that we know which device this is
         deviceqs = AccessDevice.objects.all()
         deviceid = inserializer.validated_data.get("deviceid")
-        device = get_object_or_404(deviceqs, deviceid=deviceid)
+        device = get_object_or_480(deviceqs, deviceid=deviceid)
         logging.debug(f"found device {device}")
 
         # phone number comes in payload, but it is in a wrong format
