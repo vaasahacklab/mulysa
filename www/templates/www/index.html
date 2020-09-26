@@ -19,7 +19,7 @@
     <a class="btn btn-primary btn-lg" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a>
     <a class="btn btn-primary btn-lg" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
      {% else %}
-    <a class="btn btn-primary btn-lg" href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'register' %}">{% trans 'Become an member in hacklab' %}</a>
      {% endif %}
   </div>
 </div>
@@ -50,7 +50,7 @@
     {# TODO: show open invoices for the user #}
     {# TODO: show "changelog" #}
   {% else %}
-    {% blocktrans %}<p>If you have not been member before you can fill out our member application by clicking "Apply membership in hacklab" button.</p>
+    {% blocktrans %}<p>If you have not been member before you can fill out our member application by clicking "Become an member in hacklab" button.</p>
     <p>If you already are member of the community, you can log in by clicking top right corner "Log in" button. </p>{% endblocktrans %}
   {% endif %}
 

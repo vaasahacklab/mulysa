@@ -7,8 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 13:25+0300\n"
-"PO-Revision-Date: 2020-09-26 14:00+0300\n"
+"POT-Creation-Date: 2020-09-26 18:25+0300\n"
+"PO-Revision-Date: 2020-09-26 18:35+0300\n"
+"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,8 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.4.1\n"
 
 #: www/forms.py:65
@@ -178,8 +178,8 @@ msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
 #: www/templates/www/base.html:39
-msgid "Apply membership"
-msgstr "Hae jäsenyyttä"
+msgid "Become an member"
+msgstr ""
 
 #: www/templates/www/base.html:46
 msgid "log out"
@@ -254,8 +254,8 @@ msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
 #: www/templates/www/index.html:22
-msgid "Apply membership in hacklab"
-msgstr "Hae hacklabin jäsenyyttä"
+msgid "Become an member in hacklab"
+msgstr "Tule hacklabin jäseneksi"
 
 #: www/templates/www/index.html:32
 msgid ""
@@ -274,12 +274,12 @@ msgstr "Tämä on %(SITENAME)s:n jäsenyydenhallintapalvelu."
 #: www/templates/www/index.html:53
 msgid ""
 "<p>If you have not been member before you can fill out our member "
-"application by clicking \"Apply membership in hacklab\" button.</p>\n"
+"application by clicking \"Become an member in hacklab\" button.</p>\n"
 "    <p>If you already are member of the community, you can log in by "
 "clicking top right corner \"Log in\" button. </p>"
 msgstr ""
-"<p>Jos et ole aikaisemmin ollut jäsen, täytä jäsenhakemus.</p>\n"
-"    <p>Jos olet jo jäsen, kirjaudu sisään palveluun. </p>"
+"<p>Jos et ole aikaisemmin ollut jäsen, voit täyttää jäsenhakemuksen.</p>\n"
+"    <p>Jos olet jo jäsen, voit kirjautua sisään palveluun. </p>"
 
 #: www/templates/www/index.html:57
 msgid ""
@@ -303,8 +303,8 @@ msgstr "Muokkaa"
 
 #: www/templates/www/register.html:8
 #, python-format
-msgid "Apply membership to %(SITENAME)s"
-msgstr "Hae %(SITENAME)s jäsenyyttä"
+msgid "Become an member in %(SITENAME)s"
+msgstr "Tule %(SITENAME)s jäseneksi"
 
 #: www/templates/www/register.html:27
 #, python-format
@@ -321,19 +321,7 @@ msgstr ""
 "\" target=\"_blank\">jäsenen ohjeen</a> ja <a href="
 "\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
-#: www/templates/www/register.html:36
-msgid ""
-"I promise to clean up any mess I have made at the lab (+little more)\n"
-"          and take responsibility for safety of myself, others and the "
-"premises. I will use\n"
-"          only power tools and machines I have got training and permission "
-"for.\n"
-"          "
-msgstr ""
-"Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
-"omasta ja labin turvallisuudesta."
-
-#: www/templates/www/register.html:48
+#: www/templates/www/register.html:41
 msgid "Register"
 msgstr "Hae jäsenyyttä"
 
@@ -586,6 +574,20 @@ msgstr "Vapautettu NFC-kortti"
 #: www/views.py:353 www/views.py:354
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
+
+#~ msgid "Apply membership"
+#~ msgstr "Hae jäsenyyttä"
+
+#~ msgid ""
+#~ "I promise to clean up any mess I have made at the lab (+little more)\n"
+#~ "          and take responsibility for safety of myself, others and the "
+#~ "premises. I will use\n"
+#~ "          only power tools and machines I have got training and "
+#~ "permission for.\n"
+#~ "          "
+#~ msgstr ""
+#~ "Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
+#~ "omasta ja labin turvallisuudesta."
 
 #~ msgid "Access number"
 #~ msgstr "Numero"

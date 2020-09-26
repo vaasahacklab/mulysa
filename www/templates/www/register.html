@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-6 offset-lg-3">
-      <h1>{% blocktrans %}Apply membership to {{ SITENAME }}{% endblocktrans %}</h1>
+      <h1>{% blocktrans %}Become an member in {{ SITENAME }}{% endblocktrans %}</h1>
     </div>
   </div>
 
@@ -30,13 +30,6 @@
           <a href="{{ ASSOCIATION_RULES_URL }}" target="_blank"
             >association rules</a
           >.{% endblocktrans %}
-        </p>
-
-        <p>
-          {% blocktrans %}I promise to clean up any mess I have made at the lab (+little more)
-          and take responsibility for safety of myself, others and the premises. I will use
-          only power tools and machines I have got training and permission for.
-          {% endblocktrans %}
         </p>
 
         {% bootstrap_form servicesform %}
