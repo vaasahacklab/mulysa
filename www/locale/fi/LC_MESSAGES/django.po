@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-26 18:25+0300\n"
-"PO-Revision-Date: 2020-09-26 18:35+0300\n"
+"PO-Revision-Date: 2020-09-26 19:00+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -179,7 +179,7 @@ msgstr "Vapaamuotoiset laskut"
 
 #: www/templates/www/base.html:39
 msgid "Become an member"
-msgstr ""
+msgstr "Tule jäseneksi"
 
 #: www/templates/www/base.html:46
 msgid "log out"
