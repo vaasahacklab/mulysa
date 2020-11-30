@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 18:25+0300\n"
-"PO-Revision-Date: 2020-09-26 19:00+0300\n"
+"POT-Creation-Date: 2020-11-14 20:14+0000\n"
+"PO-Revision-Date: 2020-11-14 21:49+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -32,17 +32,46 @@ msgstr "Jäsenpalvelut"
 msgid "You must select at least one service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: www/forms.py:88 www/templates/www/user.html:96
+#: www/forms.py:92
+#, python-format
+msgid "%(servicename)s, %(cost)s"
+msgstr "%(servicename)s, %(cost)s"
+
+#: www/forms.py:100 www/templates/www/custominvoice.html:28
+#: www/templates/www/custominvoice.html:51 www/templates/www/user.html:96
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: www/forms.py:90
+#: www/forms.py:102
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: www/forms.py:93
+#: www/forms.py:105
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
+
+#: www/forms.py:108
+msgid "Price per unit"
+msgstr "Hinta per yksikkö"
+
+#: www/forms.py:109
+msgid "See price from the service selected above"
+msgstr "Katso hinta valitusta palvelusta yllä"
+
+#: www/forms.py:124
+#, python-format
+msgid "Price cannot be above service max cost: %(max)s"
+msgstr "Hinta ei voi olla yli maksimin: %(max)s"
+
+#: www/forms.py:129
+#, python-format
+msgid "Cost cannot be below service min cost: %(min)s"
+msgstr "Hinta ei voi olla alle minimin: %(min)s"
+
+#: www/forms.py:135
+#, python-format
+msgid "Price must be the service cost: %(cost)s"
+msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 
 #: www/templates/registration/login.html:5
 #: www/templates/registration/login.html:11
@@ -121,8 +150,10 @@ msgstr "Lähetä minulle ohjeet!"
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
-#: www/templates/www/applications.html:12 www/templates/www/user.html:95
-#: www/templates/www/user.html:114 www/templates/www/user.html:130
+#: www/templates/www/applications.html:12
+#: www/templates/www/custominvoice.html:27
+#: www/templates/www/custominvoice.html:50 www/templates/www/user.html:95
+#: www/templates/www/user.html:122 www/templates/www/user.html:138
 msgid "Date"
 msgstr "Päiväys"
 
@@ -135,8 +166,8 @@ msgstr "Nimi"
 msgid "E-mail"
 msgstr "Sähköposti"
 
-#: www/templates/www/applications.html:15 www/templates/www/user.html:115
-#: www/templates/www/user.html:134
+#: www/templates/www/applications.html:15 www/templates/www/user.html:123
+#: www/templates/www/user.html:142
 msgid "Message"
 msgstr "Viesti"
 
@@ -147,6 +178,47 @@ msgstr "Hyväksyntä"
 #: www/templates/www/applications.html:22 www/templates/www/users.html:44
 msgid "days"
 msgstr "päivää"
+
+#: www/templates/www/banktransaction.html:7
+msgid "Bank Transaction"
+msgstr "Tilisiirto"
+
+#: www/templates/www/banktransaction.html:13
+msgid "Business ID"
+msgstr "Y-tunnus"
+
+#: www/templates/www/banktransaction.html:17
+msgid "Transaction id"
+msgstr "Tilisiirron tunnus"
+
+#: www/templates/www/banktransaction.html:21
+msgid "User"
+msgstr "Käyttäjä"
+
+#: www/templates/www/banktransaction.html:33
+msgid "Grand total"
+msgstr "Yhteensä"
+
+#: www/templates/www/banktransaction.html:41
+msgid ""
+"\n"
+"      Seller not VAT-liable\n"
+"    "
+msgstr ""
+"\n"
+"      Myyjä ei ALV-velvollinen\n"
+"    "
+
+#: www/templates/www/banktransaction.html:49
+#, python-format
+msgid ""
+"\n"
+"     Thank you and please tell your friends about %(name)s :)\n"
+"    "
+msgstr ""
+"\n"
+"     Kiitos ja kerrohan kavereillekkin %(name)s:sta :)\n"
+"    "
 
 #: www/templates/www/base.html:28 www/templates/www/index.html:19
 msgid "Show my user information"
@@ -178,8 +250,8 @@ msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
 #: www/templates/www/base.html:39
-msgid "Become an member"
-msgstr "Tule jäseneksi"
+msgid "Apply membership"
+msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/base.html:46
 msgid "log out"
@@ -194,12 +266,12 @@ msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
 #: www/templates/www/base.html:84
-#, python-format
-msgid ""
-" Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
+msgid "Report bugs at"
+msgstr "Raportoi bugit ja osallistu projektiin"
+
+#: www/templates/www/base.html:84
+msgid "GitHub"
 msgstr ""
-"Raportoi bugit ja osallistu projektiin <a href=\"%(GITHUB_URL)s"
-"\">GitHubissa</a>"
 
 #: www/templates/www/createuser.html:8
 msgid "Create user"
@@ -232,13 +304,53 @@ msgstr "Luo lasku"
 msgid "Pending invoices"
 msgstr "Maksamattomat laskut"
 
-#: www/templates/www/custominvoice.html:26
+#: www/templates/www/custominvoice.html:29
+#: www/templates/www/custominvoice.html:52 www/templates/www/user.html:97
+#: www/templates/www/user.html:139
+msgid "Amount"
+msgstr "Määrä"
+
+#: www/templates/www/custominvoice.html:30
+#: www/templates/www/custominvoice.html:53 www/templates/www/user.html:55
+#: www/templates/www/user.html:98 www/templates/www/user.html:140
+msgid "Reference number"
+msgstr "Viitenumero"
+
+#: www/templates/www/custominvoice.html:31
+msgid "Action"
+msgstr ""
+
+#: www/templates/www/custominvoice.html:36
+#: www/templates/www/custominvoice.html:59 www/templates/www/user.html:104
+msgid "days of"
+msgstr "päivää"
+
+#: www/templates/www/custominvoice.html:39
 msgid "delete"
 msgstr "poista"
 
-#: www/templates/www/custominvoice.html:29
+#: www/templates/www/custominvoice.html:44
+#, python-format
+msgid ""
+" Custominvoices are paid with the custominvoice specific amount and "
+"reference number to bank account: <b>%(bank_iban)s</b>. If the amount or "
+"reference number does not match the payment wont be registered. "
+msgstr "Vapaamuotoiset laskut maksetaan omilla summillaan ja viitenumeroillaan. "
+"Maksut tilille: <b>%(bank_iban)s</b>. Jos suorituksen summa tai viitenumero "
+"ei ole oikein maksua ei rekisteröidä"
+
+#: www/templates/www/custominvoice.html:46
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
+
+#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:99
+msgid "Paid"
+msgstr "Maksettu"
+
+#: www/templates/www/custominvoice.html:66
+#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:111
+msgid "Not paid yet"
+msgstr "Ei maksettu"
 
 #: www/templates/www/index.html:11
 msgid "Welcome back!"
@@ -249,13 +361,13 @@ msgid "Welcome! Wanna join us?"
 msgstr "Tervetuloa! Haluatko liittyä?"
 
 #: www/templates/www/index.html:20 www/templates/www/user.html:85
-#: www/templates/www/user.html:109
+#: www/templates/www/user.html:117
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
 #: www/templates/www/index.html:22
-msgid "Become an member in hacklab"
-msgstr "Tule hacklabin jäseneksi"
+msgid "Apply membership in hacklab"
+msgstr "Hae hacklabin jäsenyyttä"
 
 #: www/templates/www/index.html:32
 msgid ""
@@ -274,12 +386,12 @@ msgstr "Tämä on %(SITENAME)s:n jäsenyydenhallintapalvelu."
 #: www/templates/www/index.html:53
 msgid ""
 "<p>If you have not been member before you can fill out our member "
-"application by clicking \"Become an member in hacklab\" button.</p>\n"
+"application by clicking \"Apply membership in hacklab\" button.</p>\n"
 "    <p>If you already are member of the community, you can log in by "
 "clicking top right corner \"Log in\" button. </p>"
 msgstr ""
-"<p>Jos et ole aikaisemmin ollut jäsen, voit täyttää jäsenhakemuksen.</p>\n"
-"    <p>Jos olet jo jäsen, voit kirjautua sisään palveluun. </p>"
+"<p>Jos et ole aikaisemmin ollut jäsen, täytä jäsenhakemus.</p>\n"
+"    <p>Jos olet jo jäsen, kirjaudu sisään palveluun. </p>"
 
 #: www/templates/www/index.html:57
 msgid ""
@@ -303,25 +415,39 @@ msgstr "Muokkaa"
 
 #: www/templates/www/register.html:8
 #, python-format
-msgid "Become an member in %(SITENAME)s"
-msgstr "Tule %(SITENAME)s jäseneksi"
+msgid "Apply membership to %(SITENAME)s"
+msgstr "Hae %(SITENAME)s jäsenyyttä"
 
 #: www/templates/www/register.html:27
 #, python-format
 msgid ""
 "Terms for membership: I have read and agree to\n"
-"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</"
-"a>\n"
+"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">members guide</a>\n"
 "          and\n"
-"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
+"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\" rel="
+"\"noopener noreferrer\"\n"
 "            >association rules</a\n"
 "          >."
 msgstr ""
 "Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a href=\"%(MEMBERS_GUIDE_URL)s"
-"\" target=\"_blank\">jäsenen ohjeen</a> ja <a href="
-"\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
+"\" target=\"_blank\" rel=\"noopener noreferrer\">jäsenen ohjeen</a> ja <a "
+"href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">yhdistyksen säännöt</a>."
 
-#: www/templates/www/register.html:41
+#: www/templates/www/register.html:36
+msgid ""
+"I promise to clean up any mess I have made at the lab (+little more)\n"
+"          and take responsibility for safety of myself, others and the "
+"premises. I will use\n"
+"          only power tools and machines I have got training and permission "
+"for.\n"
+"          "
+msgstr ""
+"Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
+"omasta ja labin turvallisuudesta."
+
+#: www/templates/www/register.html:48
 msgid "Register"
 msgstr "Hae jäsenyyttä"
 
@@ -377,11 +503,6 @@ msgstr "Voimassaoloaika"
 msgid "days left"
 msgstr "päivää jäljellä"
 
-#: www/templates/www/user.html:55 www/templates/www/user.html:98
-#: www/templates/www/user.html:132
-msgid "Reference number"
-msgstr "Viitenumero"
-
 #: www/templates/www/user.html:59
 msgid "Last payment"
 msgstr "Viimeisin maksu"
@@ -410,7 +531,7 @@ msgid ""
 "This service can be paid with reference number %(ref)s\n"
 "                to bank account %(bank_iban)s. Service price is %(cost)s."
 msgstr ""
-"Tämä palvelu tulee maksaa kuukausittain viitenumerolla %(ref)s\n"
+"Tämä palvelu tulee maksaa viitenumerolla %(ref)s\n"
 "tilille %(bank_iban)s. Palvelun hinta on %(cost)s."
 
 #: www/templates/www/user.html:84
@@ -419,23 +540,15 @@ msgstr ""
 "Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit tehdä "
 "vapaamuotoisen laskun."
 
-#: www/templates/www/user.html:97 www/templates/www/user.html:131
-msgid "Amount"
-msgstr "Määrä"
-
-#: www/templates/www/user.html:103
-msgid "days of"
-msgstr "päivää jäljellä"
-
-#: www/templates/www/user.html:111
+#: www/templates/www/user.html:119
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:125
+#: www/templates/www/user.html:133
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:126
+#: www/templates/www/user.html:134
 msgid ""
 "Transactions are not processed in real time. Newest bank transactions "
 "uploaded to the system"
@@ -443,11 +556,11 @@ msgstr ""
 "Tilisiirrot eivät tule näkyviin reaaliajassa. Viimeisimmän tuodun "
 "tilisiirron päiväys on"
 
-#: www/templates/www/user.html:133
+#: www/templates/www/user.html:141
 msgid "Sender"
 msgstr "Lähettäjä"
 
-#: www/templates/www/user.html:135
+#: www/templates/www/user.html:143
 msgid "Comment"
 msgstr "Kommentti"
 
@@ -492,7 +605,7 @@ msgstr "Tallenna muutokset"
 
 #: www/templates/www/usersettings.html:59
 msgid "Extra Services"
-msgstr "Ylimääräiset jäsenpalvelut"
+msgstr "Lisäpalvelut"
 
 #: www/templates/www/usersettings.html:61
 msgid ""
@@ -500,7 +613,7 @@ msgid ""
 "only unsubscribe services when you have\n"
 "  paid them fully. "
 msgstr ""
-"Tässä näet ylimääräiset jäsenpalvelut jotka voit halutessasi ottaa käyttöön. "
+"Tässä näet lisäpalvelut jotka voit halutessasi ottaa käyttöön. "
 "Voit poistaa käytöstä palveluita ainoastaan kun ne ovat maksettu ja "
 "aktiivisessa tilassa."
 
@@ -574,20 +687,3 @@ msgstr "Vapautettu NFC-kortti"
 #: www/views.py:353 www/views.py:354
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
-
-#~ msgid "Apply membership"
-#~ msgstr "Hae jäsenyyttä"
-
-#~ msgid ""
-#~ "I promise to clean up any mess I have made at the lab (+little more)\n"
-#~ "          and take responsibility for safety of myself, others and the "
-#~ "premises. I will use\n"
-#~ "          only power tools and machines I have got training and "
-#~ "permission for.\n"
-#~ "          "
-#~ msgstr ""
-#~ "Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
-#~ "omasta ja labin turvallisuudesta."
-
-#~ msgid "Access number"
-#~ msgstr "Numero"

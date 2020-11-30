@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 18:25+0300\n"
-"PO-Revision-Date: 2020-09-26 18:33+0300\n"
+"POT-Creation-Date: 2020-11-14 21:30+0200\n"
+"PO-Revision-Date: 2020-10-21 02:15+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: utils/businesslogic.py:56
 #, python-format
 msgid "Your subscription %(service_name)s is about to expire"
-msgstr "Tilauksesi palveluun %(service_name)s on  päättymässä piakkoin"
+msgstr "Tilauksesi palveluun %(service_name)s on päättymässä"
 
 #: utils/businesslogic.py:113
 #, python-format
