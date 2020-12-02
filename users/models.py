@@ -460,7 +460,7 @@ class BankTransaction(models.Model):
     reference_number = models.CharField(
         blank=True,
         null=True,
-        verbose_name=_("Reference number of transaction"),
+        verbose_name=_("Transaction reference"),
         help_text=_(
             "Reference number is set by transaction sender and should normally always be used."
         ),
@@ -578,6 +578,12 @@ class ServiceSubscription(models.Model):
         OVERDUE: "yellow",
         SUSPENDED: "red",
     }
+
+    def is_active(self):
+        """
+        helper method for checking if the service is active
+        """
+        return True if self.state == ServiceSubscription.ACTIVE else False
 
     # Convenince method to get color of the state for ui
     def statecolor(self):

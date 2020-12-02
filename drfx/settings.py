@@ -1,5 +1,6 @@
 import logging.config
 import os
+import sys
 
 # import datetime
 
@@ -36,6 +37,13 @@ SITENAME = "Mulysa"
 SITE_URL = "https://mulysa.tld"
 PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
 
+
+# these are for the receipt functionality
+RECEIPTNAME = "Mulysa ry"
+RECEIPTREGID = "1234567-8"
+RECEIPTSTREET = "Street 12, Somewhere Finland"
+
+
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = (
     "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
@@ -51,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     # nice to have, mainly shell_plus :)
     "django_extensions",
     "log_request_id",
@@ -246,6 +255,9 @@ logging.config.dictConfig(
         },
     }
 )
+
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    logging.disable(logging.CRITICAL)
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
