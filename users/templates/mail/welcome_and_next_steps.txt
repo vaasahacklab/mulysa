@@ -9,11 +9,12 @@ approved and now is a great time to to join our community by
 coming to the next community meeting on the first Wednesday of the
 month or poping by weekly open house every Wednesday. It is also
 highly recommendable to join our communication channels (Matrix,
-Telegram or IRC and email list). Be happy to ask if you like to
+Telegram or IRC) and email list. Be happy to ask if you like to
 know more!
 
 Now is the time to login to {{siteurl}} and check your payment information and status.
 
+If you have not yet read the membership guide please do so now: {{wikiurl}}
 {% endblocktrans %}
 
 {% trans 'Your services' %}
@@ -26,7 +27,7 @@ Now is the time to login to {{siteurl}} and check your payment information and s
 {% endfor %}
 
 {% blocktrans %}
-Important note about door access! The payment data from bank is synced only every weeks or so and this might
+Important note about door access! The payment data from bank is synced about weekly or so and this might
 mean that your payment is not seen by the system until the next sync happens. You can check when the last sync happened in {{siteurl}}
 
 All Hacklab services work by voluntary basis so

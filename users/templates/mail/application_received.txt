@@ -10,7 +10,7 @@ been processed.
 In the meantime the Best way to get started is to join our community meeting
 first Wednesday of the month or weekly open house every Wednesday. It is also
 highly recommendable to join our communication channels (Matrix, Telegram or
-IRC and email list). Be happy to ask if you like to know more!
+IRC) and email list. Be happy to ask if you like to know more!
 
 You should have received e-mail link to create a password to our membership
 management system. Please login and check your membership status: {{siteurl}}
