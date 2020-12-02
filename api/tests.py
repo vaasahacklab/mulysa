@@ -1,15 +1,51 @@
-from datetime import datetime
 from unittest.mock import patch
 
 from django.core import mail
 from django.urls import reverse
+from django.utils import timezone
 
 from api.models import AccessDevice
 from drfx import settings
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
+from rest_framework_tracking.models import APIRequestLog
 from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
+
+
+@patch("api.views.VerySlowThrottle.allow_request", return_value=True)
+class TestLogging(APITestCase):
+    fixtures = ["users/fixtures/memberservices.json"]
+
+    def setUp(self):
+        # create test device
+        self.device = AccessDevice.objects.create(
+            deviceid="testdevice",
+        )
+        # and test user
+        self.ok_user = CustomUser.objects.create(
+            email="test1@example.com",
+            birthday=timezone.now(),
+            phone="+35844055066",
+            mxid="@ok:exmaple.com",
+        )
+        self.ok_user.save()
+
+    def test_access_phone_list_unauthenticated(self, mock):
+        url = reverse("access-phone")
+        data = {"deviceid": self.device.deviceid, "payload": self.ok_user.phone}
+        response = self.client.post(url, data)
+        # someone wanted these strange status_codes :)
+        self.assertEqual(response.status_code, 481)
+
+        # check that we have a drf-tracking log entry
+        self.assertEqual(APIRequestLog.objects.count(), 1)
+        self.assertIn(self.ok_user.phone, APIRequestLog.objects.first().data)
+        self.assertEqual(APIRequestLog.objects.first().response, "")
+
+    def tearDown(self):
+        CustomUser.objects.all().delete()
+        Token.objects.all().delete()
 
 
 @patch("api.views.VerySlowThrottle.allow_request", return_value=True)
@@ -24,12 +60,14 @@ class TestAccess(APITestCase):
         self.superuser_token = Token.objects.create(user=self.superuser)
 
         # create test device
-        self.device = AccessDevice.objects.create(deviceid="testdevice",)
+        self.device = AccessDevice.objects.create(
+            deviceid="testdevice",
+        )
 
         # and test user
         self.ok_user = CustomUser.objects.create(
             email="test1@example.com",
-            birthday=datetime.now(),
+            birthday=timezone.now(),
             phone="+35844055066",
             mxid="@ok:exmaple.com",
         )
@@ -40,12 +78,12 @@ class TestAccess(APITestCase):
         # when that happens this test can be removed
         # and the check in the view can also be removed
         self.duplicate_user1 = CustomUser.objects.create(
-            email="test3@example.com", birthday=datetime.now(), phone="+358440778899"
+            email="test3@example.com", birthday=timezone.now(), phone="+358440778899"
         )
         self.duplicate_user1.save()
 
         self.duplicate_user2 = CustomUser.objects.create(
-            email="test4@example.com", birthday=datetime.now(), phone="+358440778899"
+            email="test4@example.com", birthday=timezone.now(), phone="+358440778899"
         )
         self.duplicate_user2.save()
 
@@ -58,16 +96,22 @@ class TestAccess(APITestCase):
         self.ok_subscription.save()
 
         # and test card
-        self.ok_card = NFCCard.objects.create(user=self.ok_user, cardid="ABC123TEST",)
+        self.ok_card = NFCCard.objects.create(
+            user=self.ok_user,
+            cardid="ABC123TEST",
+        )
         self.ok_card.save()
         # and another test card for the same user
-        self.ok_card2 = NFCCard.objects.create(user=self.ok_user, cardid="ABC123TEST2",)
+        self.ok_card2 = NFCCard.objects.create(
+            user=self.ok_user,
+            cardid="ABC123TEST2",
+        )
         self.ok_card2.save()
 
         # user with no access
         self.fail_user = CustomUser.objects.create(
             email="test2@example.com",
-            birthday=datetime.now(),
+            birthday=timezone.now(),
             phone="+35855044033",
             mxid="@fail:exmaple.com",
         )
@@ -79,7 +123,8 @@ class TestAccess(APITestCase):
         )
         # and a test card for fail case
         self.not_ok_card = NFCCard.objects.create(
-            user=self.fail_user, cardid="TESTABC",
+            user=self.fail_user,
+            cardid="TESTABC",
         )
         self.not_ok_card.save()
 
@@ -162,7 +207,11 @@ class TestAccess(APITestCase):
 
         # check that we notified the user by email of this failure
         self.assertIn("Hei", mail.outbox[0].body, "Hei")
-        self.assertIn("Käyttäjätililläsi ei ole tällähetkellä pääsyä oveen.", mail.outbox[0].body, "failure notification")
+        self.assertIn(
+            "Käyttäjätililläsi ei ole tällähetkellä pääsyä oveen.",
+            mail.outbox[0].body,
+            "failure notification",
+        )
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-14 21:30+0200\n"
-"PO-Revision-Date: 2020-11-14 21:45+0200\n"
+"POT-Creation-Date: 2020-12-02 17:40+0200\n"
+"PO-Revision-Date: 2020-12-02 17:51+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -120,8 +120,8 @@ msgstr "Käyttäjän luontipäivä"
 msgid "Automatically set to now when user is create"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: users/models.py:174 users/models.py:269 users/models.py:693
-#: users/models.py:729
+#: users/models.py:174 users/models.py:269 users/models.py:699
+#: users/models.py:735
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
 
@@ -142,7 +142,7 @@ msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyde
 msgid "You must agree to the terms"
 msgstr "Sinun tulee hyväksyä jäsenyyden ehdot"
 
-#: users/models.py:256 users/models.py:446 users/models.py:647
+#: users/models.py:256 users/models.py:446 users/models.py:653
 msgid "Message"
 msgstr "Terveiset"
 
@@ -223,7 +223,7 @@ msgstr "Päiväys"
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: users/models.py:439 users/models.py:680
+#: users/models.py:439 users/models.py:686
 msgid "Amount"
 msgstr "Määrä"
 
@@ -317,45 +317,45 @@ msgstr ""
 "Päiväys jolloin muistutusviesti on lähetetty käyttäjälle. Palautetaan "
 "NULLiksi kun palvelun tila muuttuu."
 
-#: users/models.py:631
+#: users/models.py:637
 #, python-format
 msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"
 
-#: users/models.py:663
+#: users/models.py:669
 msgid "How many days of service this invoice pays"
 msgstr "Montako päivää tämä lasku maksaa"
 
-#: users/models.py:665
+#: users/models.py:671
 msgid ""
 "For example value 14 with access right service pays two weeks of access."
 msgstr "Esimerkiksi arvo 14 tilankäyttöoikeutta maksaa 2 viikkoa tilankäyttöä."
 
-#: users/models.py:673
+#: users/models.py:679
 msgid "Reference number for paying invoice"
 msgstr "Tilisiirron viitenumero"
 
-#: users/models.py:675
+#: users/models.py:681
 msgid "Reference number is set by transaction sender and must match this."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: users/models.py:681
+#: users/models.py:687
 msgid "Minimum amount of money to satisfy this invoice."
 msgstr "Minimisumma laskun maksamiseksi."
 
-#: users/models.py:688
+#: users/models.py:694
 msgid "Invoice creation date"
 msgstr "Laskun luontipäivä"
 
-#: users/models.py:689
+#: users/models.py:695
 msgid "Automatically set to now when invoice is created"
 msgstr "Asetetaan automaattisesti kun lasku luodaan"
 
-#: users/models.py:694
+#: users/models.py:700
 msgid "Last time this invoice was modified"
 msgstr "Päiväys, kun laskun tietoja on viimeksi muokattu"
 
-#: users/models.py:704
+#: users/models.py:710
 #, python-format
 msgid ""
 "Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - "
@@ -364,23 +364,23 @@ msgstr ""
 "Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
 "käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
 
-#: users/models.py:724
+#: users/models.py:730
 msgid "Creation date"
 msgstr "Luontipäivä"
 
-#: users/models.py:725
+#: users/models.py:731
 msgid "Automatically set to now when is created"
 msgstr "Asetetaan automaattisesti kun luodaan"
 
-#: users/models.py:730
+#: users/models.py:736
 msgid "Last time this object was modified"
 msgstr "Päiväys, kun tätä on viimeksi muokattu"
 
-#: users/models.py:736
+#: users/models.py:742
 msgid "NFC card id number as read by the card reader"
 msgstr "NFC-kortin tunniste kortinlukijan lukemana"
 
-#: users/models.py:737
+#: users/models.py:743
 msgid "Usually hex format"
 msgstr "Yleensä heksamuodossa"
 
@@ -416,10 +416,11 @@ msgid ""
 "\n"
 "In the meantime the Best way to get started is to join our community "
 "meeting\n"
-"first Tuesday of the month or weekly open house every Tuesday. It is also\n"
+"first Wednesday of the month or weekly open house every Wednesday. It is "
+"also\n"
 "highly recommendable to join our communication channels (Matrix, Telegram "
 "or\n"
-"IRC and email list). Be happy to ask if you like to know more!\n"
+"IRC) and email list. Be happy to ask if you like to know more!\n"
 "\n"
 "Be sure to also read the membership guide in the wiki: %(wikiurl)s\n"
 "\n"
@@ -436,8 +437,9 @@ msgstr ""
 "\n"
 "Käymme hakemuksesi läpi ja otamme yhteyttä kun hakemuksesi on käsitelty.\n"
 "\n"
-"Tällä aikaa voit vierailla labilla avointen ovien aikana ja liittyä "
-"pikaviestinkanavillemme.\n"
+"Tällä aikaa voit vierailla labilla avointen ovien aikana Keskiviikkoisin  ja "
+"liittyä pikaviestinkanavillemme\n"
+"(Matrix, Telegram tai IRC), sekä sähöpostilistallemme.\n"
 "\n"
 "Nyt on myös hyvä hetki lueskella jäsenen ohje sivu wikistä: %(wikiurl)s\n"
 "\n"
@@ -513,10 +515,10 @@ msgid ""
 "\n"
 "Great to have you onboard! Your membership application has been\n"
 "approved and now is a great time to to join our community by\n"
-"coming to the next community meeting on the first Tuesday of the\n"
-"month or poping by weekly open house every Tuesday. It is also\n"
+"coming to the next community meeting on the first wednesday of the\n"
+"month or poping by weekly open house every wednesday. It is also\n"
 "highly recommendable to join our communication channels (Matrix,\n"
-"Telegram or IRC and email list). Be happy to ask if you like to\n"
+"Telegram or IRC) and email list. Be happy to ask if you like to\n"
 "know more!\n"
 "\n"
 "Now is the time to login to %(siteurl)s and check your payment information "
@@ -531,8 +533,8 @@ msgstr ""
 "\n"
 "Ellet ole jo tehnyt niin, tule seuraavaan yhteisömiittiin esittelemään "
 "itsesi.\n"
-"Kannattaa myös liittyä pikaviestinkanaville ja sähköpostilistalle, jotta\n"
-"saat ajantasaista tietoa labin asioista.\n"
+"Kannattaa myös liittyä pikaviestinkanaville (Matrix, Telegram tai IRC),\n"
+"sekä sähöpostilistallemme. jotta saat ajantasaista tietoa labin asioista.\n"
 "\n"
 "Nyt on viimeistään aika kirjautua jäsenjärjestelmään: %(siteurl)s josta "
 "löydät\n"
@@ -556,8 +558,8 @@ msgstr "Ovenavaus numero"
 #, python-format
 msgid ""
 "\n"
-"Important note about door access! The payment data from bank is synced only "
-"every two weeks or so and this might\n"
+"Important note about door access! The payment data from bank is synced about "
+"weekly or so and this might\n"
 "mean that your payment is not seen by the system until the next sync "
 "happens. You can check when the last sync happened in %(siteurl)s\n"
 "\n"
@@ -569,7 +571,7 @@ msgid ""
 "Welcome!\n"
 msgstr ""
 "\n"
-"Tärkeää tietoa tilankäytöstä! Maksutiedot pankista tulevat parin viikon "
+"Tärkeää tietoa tilankäytöstä! Maksutiedot pankista tulevat noin viikon "
 "viiveellä jäsenrekisteriin, tämä tarkoittaa\n"
 "sitä että vaikka olet juuri tehnyt maksun niin järjestelmä ei siitä "
 "välttämättä vielä tiedä. Voit tarkistaa milloin viimeisin pankki tieto on "
