@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+import markdown
+from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
 from drfx import settings
@@ -212,8 +214,8 @@ def userdetails(request, id):
     )
     userdetails.transactions = BankTransaction.objects.filter(
         user=userdetails
-    ).order_by("date")
-    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by("date")
+    ).order_by("-date")
+    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by("-date")
     userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
     userdetails.membership_application = MembershipApplication.objects.filter(
         user=userdetails
@@ -355,7 +357,9 @@ def usersettings_claim_nfc(request, id):
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
-        logentry = get_object_or_404(DeviceAccessLogEntry, id=request.POST["logentryid"])
+        logentry = get_object_or_404(
+            DeviceAccessLogEntry, id=request.POST["logentryid"]
+        )
 
         # mark the entry claimed
         logentry.claimed_by = customuser
@@ -493,20 +497,12 @@ def banktransaction_view(request, banktransactionid):
 
 @login_required
 @staff_member_required
-def updateuser(request, id):
-    user = CustomUser.objects.get(id=id)
-
-    # First, generate any missing ref numbers
-    subscriptions = ServiceSubscription.objects.filter(user=user)
-    for subscription in subscriptions:
-        if not subscription.reference_number:
-            subscription.reference_number = referencenumber.generate(
-                settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
-            )
-            subscription.save()
-
-    BusinessLogic.updateuser(user)
-    return userdetails(request, id)
+def updateuser(request):
+    if request.method == "POST":
+        user = get_object_or_404(CustomUser, id=request.POST["userid"])
+        BusinessLogic.updateuser(user)
+        messages.success(request, _(f"Updateuser ran for user {user}"))
+    return HttpResponseRedirect(reverse("users"))
 
 
 @login_required
@@ -516,7 +512,18 @@ def createuser(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            return userdetails(request, new_user.id)
+            return HttpResponseRedirect(reverse("userdetails", args=(new_user.id,)))
     else:
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
+
+@login_required
+def changelog_view(request):
+    """
+    Just render the CHANGELOG.md file for users.
+    """
+    with open("CHANGELOG.md", "r", encoding="utf-8") as input_file:
+        text = input_file.read()
+    changelog = mark_safe(markdown.markdown(text))
+
+    return render(request, "www/changelog.html", {"changelog": changelog})

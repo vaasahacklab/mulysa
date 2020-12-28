@@ -83,15 +83,6 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if qs.count() == 0:
             return Response(status=480)
 
-        # multiple users found. this cannot work...
-        # phone number is going to get unique constraint. When that happens
-        # this can be removed completely
-        if qs.count() != 1:
-            logger.error(
-                f"Found multiple users with number: {number} this should not happen"
-            )
-            return Response(status=status.HTTP_409_CONFLICT)
-
         # our user
         user = qs.first()
 
@@ -99,7 +90,8 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if not user.has_door_access():
             user.log("Door access denied with phone")
             door_access_denied.send(sender=self.__class__, user=user, method="phone")
-            return Response(status=481)
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=481)
 
         user.log("Door opened with phone")
         outserializer = UserAccessSerializer(user)
@@ -173,6 +165,10 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data)
 
+        if response_status == 481:
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=response_status)
+
         return Response(status=response_status)
 
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
@@ -214,6 +210,10 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if response_status == 0:
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data)
+
+        if response_status == 481:
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=response_status)
 
         return Response(status=response_status)
 
