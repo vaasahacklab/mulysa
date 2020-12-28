@@ -13,7 +13,7 @@ coverage = "*"
 tox = "*"
 isort = "*"
 rope = "*"
-python-coveralls = "*"
+coveralls = "*"
 black = "*"
 werkzeug = "*"
 
@@ -37,6 +37,7 @@ django-bootstrap4 = "*"
 django-autoslug = "*"
 django-mailer = "*"
 xlrd = "*"
+markdown = "*"
 
 [requires]
 python_version = "3.7"

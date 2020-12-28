@@ -26,7 +26,7 @@ urlpatterns = [
         views.custominvoice_action,
         name="custominvoice_action",
     ),
-    path("updateuser/<int:id>/", views.updateuser, name="updateuser"),
+    path("updateuser", views.updateuser, name="updateuser"),
     path("applications", views.applications, name="applications"),
     path(
         "applications/<int:application_id>/<str:operation>",
@@ -34,5 +34,6 @@ urlpatterns = [
         name="application_operation",
     ),
     path("banktransaction/<int:banktransactionid>/", views.banktransaction_view, name="banktransaction-view"),
+    path("changelog", views.changelog_view, name="changelog-view"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
