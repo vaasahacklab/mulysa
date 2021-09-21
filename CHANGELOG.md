@@ -1,5 +1,12 @@
 # Changelog
 
+* Finish OIDC setup documentation. PR [#333](https://github.com/TampereHacklab/mulysa/pull/333) by [@olmari](https://github.com/olmari).
+* oauth backend for keycloack. PR [#328](https://github.com/TampereHacklab/mulysa/pull/328) by [@tswfi](https://github.com/tswfi).
+* Add birthday filters to admin view. PR [#332](https://github.com/TampereHacklab/mulysa/pull/332) by [@tswfi](https://github.com/tswfi).
+* Update django to 3.2.6. PR [#329](https://github.com/TampereHacklab/mulysa/pull/329) by [@tswfi](https://github.com/tswfi).
+* Django 3.2 and update to all other packages also. PR [#324](https://github.com/TampereHacklab/mulysa/pull/324) by [@tswfi](https://github.com/tswfi).
+* Add accounting exporter. PR [#325](https://github.com/TampereHacklab/mulysa/pull/325) by [@tswfi](https://github.com/tswfi).
+* Bump urllib3 from 1.26.3 to 1.26.4. PR [#321](https://github.com/TampereHacklab/mulysa/pull/321) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Better way to check if membershipapplication is still pending. PR [#320](https://github.com/TampereHacklab/mulysa/pull/320) by [@olmari](https://github.com/olmari).
 * Fix/no redirect error. PR [#319](https://github.com/TampereHacklab/mulysa/pull/319) by [@olmari](https://github.com/olmari).
 * Fix and test for new Holvi Excel header format for data import, fixes #316. PR [#317](https://github.com/TampereHacklab/mulysa/pull/317) by [@mikeful](https://github.com/mikeful).
