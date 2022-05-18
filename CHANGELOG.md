@@ -1,5 +1,10 @@
 # Changelog
 
+* New .xlsx Holvi-importer, tox.ini fixes. PR [#353](https://github.com/TampereHacklab/mulysa/pull/353) by [@olmari](https://github.com/olmari).
+* Change to Python 3.9 and tox4. PR [#352](https://github.com/TampereHacklab/mulysa/pull/352) by [@olmari](https://github.com/olmari).
+* Bump django from 3.2.12 to 3.2.13. PR [#350](https://github.com/TampereHacklab/mulysa/pull/350) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump ipython from 7.28.0 to 7.31.1. PR [#346](https://github.com/TampereHacklab/mulysa/pull/346) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 3.2.8 to 3.2.12. PR [#347](https://github.com/TampereHacklab/mulysa/pull/347) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * move application management to django admin views. PR [#343](https://github.com/TampereHacklab/mulysa/pull/343) by [@tswfi](https://github.com/tswfi).
 * Sanitize url redirect. PR [#340](https://github.com/TampereHacklab/mulysa/pull/340) by [@tswfi](https://github.com/tswfi).
 * Format OIDC-instructions more readable. PR [#338](https://github.com/TampereHacklab/mulysa/pull/338) by [@olmari](https://github.com/olmari).
