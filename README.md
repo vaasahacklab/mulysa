@@ -8,7 +8,7 @@ asylum[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
-Tampere Hacklab has been groving and member management has become pretty labor intensive.
+Tampere Hacklab has been growing and member management has become pretty labour intensive.
 This project tries to automate the boring parts by automating the communication with members,
 managing the door access and managing the LDAP account creation (some of this is still on the TODO list).
 
@@ -45,6 +45,18 @@ git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
 pipenv sync --dev
 pipenv shell
+```
+
+Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
+
+```
+# revert back to cookie names that work in dev
+SESSION_COOKIE_NAME = '__NotReallyHost-sessionid'
+LANGUAGE_COOKIE_NAME = '__NotReallyHost-language'
+CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
+```
+
+```bash
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
 ./manage.py runserver
@@ -80,13 +92,17 @@ tox
 
 ## to update local bootstrap files
 
+This will download some js and css files from external sites to be hosted locally.
+
 run:
 
 ```bash
 ./manage.py update_local_bootstrap
 ```
 
-* paste update settings.py with the new values
+the command spits out the new filenames that need to be updated to the settings.py file.
+
+* update settings.py with the new values
 * commit all the files
 
 ## Style checks & tests

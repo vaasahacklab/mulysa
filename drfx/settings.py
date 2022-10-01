@@ -97,14 +97,27 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+# more secure cookies
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_NAME = '__Host-sessionid'
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SECURE = True
+LANGUAGE_COOKIE_SAMESITE = 'Strict'
+LANGUAGE_COOKIE_NAME = '__Host-language'
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_NAME = '__Host-csrf'
+
 # use the management command update_local_bootstrap to fetch the files
 # and to get this section when needed
 BOOTSTRAP4 = {
     "css_url": "/static/www/bootstrap4/bootstrap.min.css",
-    "javascript_url": "/static/www/bootstrap4/bootstrap.min.js",
+    "javascript_url": "/static/www/bootstrap4/bootstrap.bundle.min.js",
     "jquery_slim_url": "/static/www/bootstrap4/jquery-3.5.1.slim.min.js",
     "jquery_url": "/static/www/bootstrap4/jquery-3.5.1.min.js",
-    "popper_url": "/static/www/bootstrap4/popper.min.js",
 }
 
 MIDDLEWARE = [
@@ -117,7 +130,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "user_language_middleware.UserLanguageMiddleware",
+    "users.middleware.language.UserLanguageMiddleware",
 ]
 
 ROOT_URLCONF = "drfx.urls"
@@ -230,10 +243,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
 }
 
-OAUTH2_PROVIDER = {
-    "SCOPES": {"read": "Read scope", "write": "Write scope", "me": "myself"}
-}
-
 # tell all auth to use email as username
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
@@ -306,6 +315,8 @@ LOGOUT_REDIRECT_URL = "/"
 OAUTH2_PROVIDER = {
     "OAUTH2_VALIDATOR_CLASS": "api.mulysaoauthvalidator.MulysaOAuth2Validator",
     "OIDC_ENABLED": True,
+    # keep pre2.0 behaviour see https://django-oauth-toolkit.readthedocs.io/en/latest/changelog.html#id7
+    "PKCE_REQUIRED": False,
     "SCOPES": {
         "openid": "OpenID Connect scope",
     },

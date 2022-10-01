@@ -1,5 +1,12 @@
 # Changelog
 
+* Door api smtp error. PR [#387](https://github.com/TampereHacklab/mulysa/pull/387) by [@tswfi](https://github.com/tswfi).
+* Update README.md. PR [#367](https://github.com/TampereHacklab/mulysa/pull/367) by [@ashksmith](https://github.com/ashksmith).
+* Favicon. PR [#384](https://github.com/TampereHacklab/mulysa/pull/384) by [@tswfi](https://github.com/tswfi).
+* More secure cookies, fixes #370. PR [#371](https://github.com/TampereHacklab/mulysa/pull/371) by [@tswfi](https://github.com/tswfi).
+* 2022 update everything, django to 4.1. PR [#361](https://github.com/TampereHacklab/mulysa/pull/361) by [@tswfi](https://github.com/tswfi).
+* add basic test for oauth2validator method. PR [#363](https://github.com/TampereHacklab/mulysa/pull/363) by [@tswfi](https://github.com/tswfi).
+* Speed up Docker container builds. PR [#362](https://github.com/TampereHacklab/mulysa/pull/362) by [@janilahti](https://github.com/janilahti).
 * New .xlsx Holvi-importer, tox.ini fixes. PR [#353](https://github.com/TampereHacklab/mulysa/pull/353) by [@olmari](https://github.com/olmari).
 * Change to Python 3.9 and tox4. PR [#352](https://github.com/TampereHacklab/mulysa/pull/352) by [@olmari](https://github.com/olmari).
 * Bump django from 3.2.12 to 3.2.13. PR [#350](https://github.com/TampereHacklab/mulysa/pull/350) by [@dependabot[bot]](https://github.com/apps/dependabot).
