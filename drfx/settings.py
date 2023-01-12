@@ -32,6 +32,9 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
+# https://docs.djangoproject.com/en/4.1/ref/settings/
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # Sitename
 SITENAME = "Mulysa"
 SITE_URL = "https://mulysa.tld"
@@ -102,7 +105,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 # more secure cookies
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_NAME = "__Host-sessionid"
 LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SECURE = True

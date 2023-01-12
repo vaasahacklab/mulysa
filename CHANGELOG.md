@@ -1,5 +1,10 @@
 # Changelog
 
+* Downgrade SESSION_COOKIE_SAMESITE to Lax. PR [#418](https://github.com/TampereHacklab/mulysa/pull/418) by [@tswfi](https://github.com/tswfi).
+* nginx forwarded-proto: pass the forwarded-proto header that traefik set. PR [#417](https://github.com/TampereHacklab/mulysa/pull/417) by [@tswfi](https://github.com/tswfi).
+* fix missing semicolon. PR [#416](https://github.com/TampereHacklab/mulysa/pull/416) by [@tswfi](https://github.com/tswfi).
+* Default to configuration where X-Forwarded-Proto. PR [#414](https://github.com/TampereHacklab/mulysa/pull/414) by [@tswfi](https://github.com/tswfi).
+* Bump certifi from 2022.9.24 to 2022.12.7. PR [#408](https://github.com/TampereHacklab/mulysa/pull/408) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Django4.1.3. PR [#407](https://github.com/TampereHacklab/mulysa/pull/407) by [@tswfi](https://github.com/tswfi).
 * add few fields to banktransaction view for easier checking. PR [#404](https://github.com/TampereHacklab/mulysa/pull/404) by [@tswfi](https://github.com/tswfi).
 * add fetching .map files locally to update_local_bootsrap. Fixes #402. PR [#403](https://github.com/TampereHacklab/mulysa/pull/403) by [@tswfi](https://github.com/tswfi).
