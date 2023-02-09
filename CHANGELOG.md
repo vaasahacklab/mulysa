@@ -1,5 +1,12 @@
 # Changelog
 
+* Revert taking out mysqlclient. PR [#429](https://github.com/TampereHacklab/mulysa/pull/429) by [@tswfi](https://github.com/tswfi).
+* refactor: split `users/models.py` into individual files. PR [#421](https://github.com/TampereHacklab/mulysa/pull/421) by [@braaar](https://github.com/braaar).
+* Fix transaction graph grouping by summing the data. PR [#428](https://github.com/TampereHacklab/mulysa/pull/428) by [@tswfi](https://github.com/tswfi).
+* Update all dependencies, updates django to 4.1.6. PR [#415](https://github.com/TampereHacklab/mulysa/pull/415) by [@tswfi](https://github.com/tswfi).
+* chore: bump codeQL workflows. PR [#420](https://github.com/TampereHacklab/mulysa/pull/420) by [@braaar](https://github.com/braaar).
+* docs: remove old prerequisite list. PR [#419](https://github.com/TampereHacklab/mulysa/pull/419) by [@braaar](https://github.com/braaar).
+* docs: improve prerequisites installation guide. PR [#413](https://github.com/TampereHacklab/mulysa/pull/413) by [@braaar](https://github.com/braaar).
 * Downgrade SESSION_COOKIE_SAMESITE to Lax. PR [#418](https://github.com/TampereHacklab/mulysa/pull/418) by [@tswfi](https://github.com/tswfi).
 * nginx forwarded-proto: pass the forwarded-proto header that traefik set. PR [#417](https://github.com/TampereHacklab/mulysa/pull/417) by [@tswfi](https://github.com/tswfi).
 * fix missing semicolon. PR [#416](https://github.com/TampereHacklab/mulysa/pull/416) by [@tswfi](https://github.com/tswfi).
