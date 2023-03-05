@@ -1,5 +1,40 @@
 # Changelog
 
+* remove pyup, using dependabot now. PR [#440](https://github.com/TampereHacklab/mulysa/pull/440) by [@tswfi](https://github.com/tswfi).
+* Small changes to custominvoice texts suggested on tampere channels. PR [#438](https://github.com/TampereHacklab/mulysa/pull/438) by [@tswfi](https://github.com/tswfi).
+* Bump werkzeug from 2.2.2 to 2.2.3. PR [#437](https://github.com/TampereHacklab/mulysa/pull/437) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 4.1.6 to 4.1.7. PR [#436](https://github.com/TampereHacklab/mulysa/pull/436) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Clarify English wording of custom invoices on user.html.. PR [#432](https://github.com/TampereHacklab/mulysa/pull/432) by [@brndd](https://github.com/brndd).
+* Bump ipython from 8.9.0 to 8.10.0. PR [#431](https://github.com/TampereHacklab/mulysa/pull/431) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Start graph always from first day of the month. PR [#430](https://github.com/TampereHacklab/mulysa/pull/430) by [@tswfi](https://github.com/tswfi).
+* Revert taking out mysqlclient. PR [#429](https://github.com/TampereHacklab/mulysa/pull/429) by [@tswfi](https://github.com/tswfi).
+* refactor: split `users/models.py` into individual files. PR [#421](https://github.com/TampereHacklab/mulysa/pull/421) by [@braaar](https://github.com/braaar).
+* Fix transaction graph grouping by summing the data. PR [#428](https://github.com/TampereHacklab/mulysa/pull/428) by [@tswfi](https://github.com/tswfi).
+* Update all dependencies, updates django to 4.1.6. PR [#415](https://github.com/TampereHacklab/mulysa/pull/415) by [@tswfi](https://github.com/tswfi).
+* chore: bump codeQL workflows. PR [#420](https://github.com/TampereHacklab/mulysa/pull/420) by [@braaar](https://github.com/braaar).
+* docs: remove old prerequisite list. PR [#419](https://github.com/TampereHacklab/mulysa/pull/419) by [@braaar](https://github.com/braaar).
+* docs: improve prerequisites installation guide. PR [#413](https://github.com/TampereHacklab/mulysa/pull/413) by [@braaar](https://github.com/braaar).
+* Downgrade SESSION_COOKIE_SAMESITE to Lax. PR [#418](https://github.com/TampereHacklab/mulysa/pull/418) by [@tswfi](https://github.com/tswfi).
+* nginx forwarded-proto: pass the forwarded-proto header that traefik set. PR [#417](https://github.com/TampereHacklab/mulysa/pull/417) by [@tswfi](https://github.com/tswfi).
+* fix missing semicolon. PR [#416](https://github.com/TampereHacklab/mulysa/pull/416) by [@tswfi](https://github.com/tswfi).
+* Default to configuration where X-Forwarded-Proto. PR [#414](https://github.com/TampereHacklab/mulysa/pull/414) by [@tswfi](https://github.com/tswfi).
+* Bump certifi from 2022.9.24 to 2022.12.7. PR [#408](https://github.com/TampereHacklab/mulysa/pull/408) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Django4.1.3. PR [#407](https://github.com/TampereHacklab/mulysa/pull/407) by [@tswfi](https://github.com/tswfi).
+* add few fields to banktransaction view for easier checking. PR [#404](https://github.com/TampereHacklab/mulysa/pull/404) by [@tswfi](https://github.com/tswfi).
+* add fetching .map files locally to update_local_bootsrap. Fixes #402. PR [#403](https://github.com/TampereHacklab/mulysa/pull/403) by [@tswfi](https://github.com/tswfi).
+* default to monthly grouping in transactions graph. PR [#401](https://github.com/TampereHacklab/mulysa/pull/401) by [@tswfi](https://github.com/tswfi).
+* Update django 4.1.3. PR [#400](https://github.com/TampereHacklab/mulysa/pull/400) by [@tswfi](https://github.com/tswfi).
+* nordigen. PR [#397](https://github.com/TampereHacklab/mulysa/pull/397) by [@tswfi](https://github.com/tswfi).
+* Pipenv update for 2022/11, updates django to 4.1.2. PR [#396](https://github.com/TampereHacklab/mulysa/pull/396) by [@tswfi](https://github.com/tswfi).
+* BankTransaction aggregatedata for graphs. PR [#395](https://github.com/TampereHacklab/mulysa/pull/395) by [@tswfi](https://github.com/tswfi).
+* Improve holvi importer. PR [#389](https://github.com/TampereHacklab/mulysa/pull/389) by [@tswfi](https://github.com/tswfi).
+* Door api smtp error. PR [#387](https://github.com/TampereHacklab/mulysa/pull/387) by [@tswfi](https://github.com/tswfi).
+* Update README.md. PR [#367](https://github.com/TampereHacklab/mulysa/pull/367) by [@ashksmith](https://github.com/ashksmith).
+* Favicon. PR [#384](https://github.com/TampereHacklab/mulysa/pull/384) by [@tswfi](https://github.com/tswfi).
+* More secure cookies, fixes #370. PR [#371](https://github.com/TampereHacklab/mulysa/pull/371) by [@tswfi](https://github.com/tswfi).
+* 2022 update everything, django to 4.1. PR [#361](https://github.com/TampereHacklab/mulysa/pull/361) by [@tswfi](https://github.com/tswfi).
+* add basic test for oauth2validator method. PR [#363](https://github.com/TampereHacklab/mulysa/pull/363) by [@tswfi](https://github.com/tswfi).
+* Speed up Docker container builds. PR [#362](https://github.com/TampereHacklab/mulysa/pull/362) by [@janilahti](https://github.com/janilahti).
 * New .xlsx Holvi-importer, tox.ini fixes. PR [#353](https://github.com/TampereHacklab/mulysa/pull/353) by [@olmari](https://github.com/olmari).
 * Change to Python 3.9 and tox4. PR [#352](https://github.com/TampereHacklab/mulysa/pull/352) by [@olmari](https://github.com/olmari).
 * Bump django from 3.2.12 to 3.2.13. PR [#350](https://github.com/TampereHacklab/mulysa/pull/350) by [@dependabot[bot]](https://github.com/apps/dependabot).
