@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils import timezone
 
 from rangefilter.filters import DateRangeFilter
 
-from .filters import PredefAgeListFilter
+from .filters import PredefAgeListFilter, MarkedForDeletionFilter
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import (
     BankTransaction,
@@ -14,6 +15,7 @@ from .models import (
     NFCCard,
     ServiceSubscription,
     UsersLog,
+    Statistics,
 )
 
 
@@ -27,6 +29,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
+
     ordering = (
         "first_name",
         "last_name",
@@ -37,9 +40,7 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
         "nick",
         "mxid",
-        "language",
-        "municipality",
-        "age_years",
+        "marked_for_deletion_on",
         "is_active",
         "is_staff",
         "is_superuser",
@@ -48,6 +49,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = (
         "is_active",
         "is_staff",
+        MarkedForDeletionFilter,
         "language",
         "municipality",
         PredefAgeListFilter,
@@ -86,6 +88,20 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     inlines = [ServiceSubscriptionInline]
+
+    actions = ["mark_for_deletion_on", "mark_for_deletion_off"]
+
+    def mark_for_deletion_on(self, request, queryset):
+        queryset.update(marked_for_deletion_on=timezone.now())
+
+    mark_for_deletion_on.short_description = "Mark selected users for deletion"
+
+    def mark_for_deletion_off(self, request, queryset):
+        queryset.update(marked_for_deletion_on=None)
+
+    mark_for_deletion_off.short_description = (
+        "Remove mark for deletion from selected users"
+    )
 
 
 class NFCCardAdmin(admin.ModelAdmin):
@@ -147,6 +163,26 @@ class CustomInvoiceAdmin(admin.ModelAdmin):
     ]
 
 
+class StatisticsAdmin(admin.ModelAdmin):
+    """
+    Allow only viewing statistics in admin
+    """
+
+    list_display = [
+        field.name for field in Statistics._meta.fields if field.name != "id"
+    ]
+
+    date_hierarchy = "date"
+    list_display_links = None
+    actions = None
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
 admin.site.register(MemberService, MemberServiceAdmin)
@@ -155,3 +191,4 @@ admin.site.register(BankTransaction, BankTransactionAdmin)
 admin.site.register(CustomInvoice, CustomInvoiceAdmin)
 admin.site.register(UsersLog)
 admin.site.register(NFCCard, NFCCardAdmin)
+admin.site.register(Statistics, StatisticsAdmin)
