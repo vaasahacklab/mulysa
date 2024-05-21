@@ -1,5 +1,16 @@
 # Changelog
 
+* Bump requests from 2.31.0 to 2.32.0. PR [#489](https://github.com/TampereHacklab/mulysa/pull/489) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Do a bit of hiding for custom invoices. PR [#480](https://github.com/TampereHacklab/mulysa/pull/480) by [@tswfi](https://github.com/tswfi).
+* Update dependecies and bootstrap. PR [#487](https://github.com/TampereHacklab/mulysa/pull/487) by [@tswfi](https://github.com/tswfi).
+* Bump jinja2 from 3.1.3 to 3.1.4. PR [#486](https://github.com/TampereHacklab/mulysa/pull/486) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump werkzeug from 3.0.1 to 3.0.3. PR [#485](https://github.com/TampereHacklab/mulysa/pull/485) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump gunicorn from 21.2.0 to 22.0.0. PR [#484](https://github.com/TampereHacklab/mulysa/pull/484) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump sqlparse from 0.4.4 to 0.5.0. PR [#483](https://github.com/TampereHacklab/mulysa/pull/483) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump idna from 3.6 to 3.7. PR [#482](https://github.com/TampereHacklab/mulysa/pull/482) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump jwcrypto from 1.5.1 to 1.5.6. PR [#481](https://github.com/TampereHacklab/mulysa/pull/481) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 4.2.10 to 4.2.11. PR [#478](https://github.com/TampereHacklab/mulysa/pull/478) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump black from 23.11.0 to 24.3.0. PR [#479](https://github.com/TampereHacklab/mulysa/pull/479) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump cryptography from 42.0.0 to 42.0.4. PR [#474](https://github.com/TampereHacklab/mulysa/pull/474) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Make it possible to create new user from django admin panel. PR [#469](https://github.com/TampereHacklab/mulysa/pull/469) by [@sbeach92](https://github.com/sbeach92).
 * Bump django from 4.2.8 to 4.2.10. PR [#467](https://github.com/TampereHacklab/mulysa/pull/467) by [@dependabot[bot]](https://github.com/apps/dependabot).
