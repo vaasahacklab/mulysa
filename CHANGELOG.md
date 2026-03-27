@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump requests from 2.32.5 to 2.33.0. PR [#639](https://github.com/TampereHacklab/mulysa/pull/639) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django-allauth from 65.13.0 to 65.14.1. PR [#637](https://github.com/TampereHacklab/mulysa/pull/637) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.2.11 to 5.2.12. PR [#636](https://github.com/TampereHacklab/mulysa/pull/636) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.2.9 to 5.2.11. PR [#633](https://github.com/TampereHacklab/mulysa/pull/633) by [@dependabot[bot]](https://github.com/apps/dependabot).
