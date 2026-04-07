@@ -17,10 +17,8 @@ jobs:
   latest-changes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.LATEST_CHANGES_FINEGRAINED_TOKEN }}
-      - uses: docker://tiangolo/latest-changes:0.3.2
+      - uses: actions/checkout@v5
+      - uses: tiangolo/latest-changes@0.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           latest_changes_file: CHANGELOG.md
