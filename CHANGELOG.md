@@ -1,5 +1,6 @@
 # Changelog
 
+* update everything. PR [#644](https://github.com/TampereHacklab/mulysa/pull/644) by [@tswfi](https://github.com/tswfi).
 * with token. PR [#643](https://github.com/TampereHacklab/mulysa/pull/643) by [@tswfi](https://github.com/tswfi).
 * Bump requests from 2.32.5 to 2.33.0. PR [#639](https://github.com/TampereHacklab/mulysa/pull/639) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django-allauth from 65.13.0 to 65.14.1. PR [#637](https://github.com/TampereHacklab/mulysa/pull/637) by [@dependabot[bot]](https://github.com/apps/dependabot).
