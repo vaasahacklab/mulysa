@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump idna from 3.13 to 3.15. PR [#650](https://github.com/TampereHacklab/mulysa/pull/650) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.2.13 to 5.2.14. PR [#648](https://github.com/TampereHacklab/mulysa/pull/648) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * update everything. PR [#644](https://github.com/TampereHacklab/mulysa/pull/644) by [@tswfi](https://github.com/tswfi).
 * with token. PR [#643](https://github.com/TampereHacklab/mulysa/pull/643) by [@tswfi](https://github.com/tswfi).
