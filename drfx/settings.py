@@ -46,18 +46,33 @@ SITE_URL = "https://mulysa.tld"
 PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
 
 
-# these are for the receipt functionality
+# These are for the receipt functionality
 RECEIPTNAME = "Mulysa ry"
 RECEIPTREGID = "1234567-8"
 RECEIPTSTREET = "Street 12, Somewhere Finland"
 
+# Matrix integration
 
-# External urls, like links to members guide and rules
+# Access token for user you want to use. Leave empty for no Matrix integration.
+MATRIX_ACCESS_TOKEN = ""
+# Matrix homeserver URL
+MATRIX_SERVER = "https://matrix.hacklab.fi"
+# Room ID to invite new users. Default points to Hacklab.fi Matrix space.
+MATRIX_ROOM_ID = "!yNczWCtqHFeWuTbmhB:hacklab.fi"
+# URL to register to Matrix, if no account provided
+MATRIX_ACCOUNT_CRETION_URL = "https://chat.hacklab.fi/#/login"
+# Site specific help text for registration
+MATRIX_ACCOUNT_CRETION_HELP = "Choose Continue with Hacklab Finland Keycloack"
+
+# External urls, like links to members guide, rules and NFC guide
 ASSOCIATION_RULES_URL = (
     "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
 )
 MEMBERS_GUIDE_URL = "https://wiki.tampere.hacklab.fi/member_s_guide"
 GITHUB_URL = "https://github.com/TampereHacklab/mulysa"
+NFC_WIKI_URL = (
+    "https://wiki.tampere.hacklab.fi/jasenen_ohje/ovet#nfc_kortin_rekisteroeinti"
+)
 
 # Application definition
 INSTALLED_APPS = [
@@ -257,9 +272,8 @@ REST_FRAMEWORK = {
 }
 
 # tell all auth to use email as username
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 OLD_PASSWORD_FIELD_ENABLED = True
 
 LOGGING_CONFIG = None
@@ -373,6 +387,11 @@ CONSTANCE_CONFIG = {
         "Link to privacy policy",
         str,
     ),
+    "NFC_WIKI_URL": (
+        NFC_WIKI_URL,
+        "Link to NFC guide",
+        str,
+    ),
     # Receipt functionality configuration
     "RECEIPT_NAME": (RECEIPTNAME, "Name of the association to show on receipts", str),
     "RECEIPT_REGID": (RECEIPTREGID, "ID of the association to show on receipts", str),
@@ -382,6 +401,13 @@ CONSTANCE_CONFIG = {
         str,
     ),
     "GITHUB_URL": (GITHUB_URL, "Link to the github repository", str),
+    "MATRIX_SERVER": (MATRIX_SERVER, "Matrix server", str),
+    "MATRIX_MEMBER_ROOM_ID": (MATRIX_ROOM_ID, "Matrix room id for members", str),
+    "HIDE_CUSTOM_INVOICE": (
+        False,
+        "Hide the custom invoice feature for end users",
+        bool,
+    ),
     # Uncomment this if you would like to be able to edit the bank account details in the admin panel
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
