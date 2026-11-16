@@ -2,10 +2,45 @@ import datetime as dt
 
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Count
 
 import rest_framework_filters as filters
 
 from . import models
+
+
+class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
+    title = _("Service Subscription Count")
+    parameter_name = "service_subscription_count"
+
+    def lookups(self, request, model_admin):
+        # Defines filter options in the dropdown
+        return (
+            ("0", _("0 Subscriptions")),
+            ("1", _("1 Subscription")),
+            ("2", _("2 Subscriptions")),
+            ("more_than_2", _("More than 2 Subscriptions")),
+        )
+
+    def queryset(self, request, queryset):
+        # Filters the queryset based on the selected option
+        if self.value() == "0":
+            return queryset.annotate(
+                num_subscriptions=Count("servicesubscription")
+            ).filter(num_subscriptions=0)
+        elif self.value() == "1":
+            return queryset.annotate(
+                num_subscriptions=Count("servicesubscription")
+            ).filter(num_subscriptions=1)
+        elif self.value() == "2":
+            return queryset.annotate(
+                num_subscriptions=Count("servicesubscription")
+            ).filter(num_subscriptions=2)
+        elif self.value() == "more_than_2":
+            return queryset.annotate(
+                num_subscriptions=Count("servicesubscription")
+            ).filter(num_subscriptions__gt=2)
+        return queryset
 
 
 class PredefAgeListFilter(admin.SimpleListFilter):
@@ -49,6 +84,29 @@ class PredefAgeListFilter(admin.SimpleListFilter):
         except ValueError:
             dt = dt.replace(year=dt.year + years, day=dt.day - 1)
         return dt
+
+
+class MarkedForDeletionFilter(admin.SimpleListFilter):
+    title = _("Marked for deletion")
+    parameter_name = "marked_for_deletion_on__isnull"
+
+    def lookups(self, request, model_admin):
+        """
+        Few predefined filters
+        """
+        return (
+            ("false", _("Marked for deletion")),
+            ("true", _("NOT Marked for deletion")),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "true":
+            return queryset.filter(marked_for_deletion_on__isnull=True)
+        elif value == "false":
+            return queryset.filter(marked_for_deletion_on__isnull=False)
+
+        return queryset
 
 
 class UserFilter(filters.FilterSet):

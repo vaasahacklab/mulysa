@@ -1,0 +1,10 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+
+{% blocktrans %}Your account has been deactivated and marked for deletion. All of your membership services linked to this account, including online services, will cease to function.{% endblocktrans %}
+
+{{user.first_name}} {{user.last_name}}
+
+{# TODO: tell what this means and how to recover if you want to #}
+{% endblock %}

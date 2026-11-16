@@ -1,4 +1,3 @@
-[![Depedency updates status](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
 [![Build status](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml)
 [![Coverage Status](https://coveralls.io/repos/github/TampereHacklab/mulysa/badge.svg?branch=master)](https://coveralls.io/github/TampereHacklab/mulysa?branch=master)
 
@@ -35,10 +34,20 @@ Most of this works around our "User" model which can do multiple things
 
 In order to run your local development environment of mulysa, there are some prerequisites you first need to install.
 
-## Installing prerequisites on Debian 11.2
+## Installing prerequisites on Linux
+
+### Debian 11.2
 
 ```sh
 sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
+```
+
+### Fedora 42
+
+```sh
+sudo dnf install git python3-pip python3.11 python3.11-devel gettext mariadb mariadb-devel
+sudo dnf group install development-tools # installs GNU compilers and common libraries, required for pip to build dependencies
+pip install --user pipenv
 ```
 
 ## Installing prerequisites on Mac OS
@@ -46,29 +55,18 @@ sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
-brew install git
-```
-
-```sh
-brew install pipenv
+brew install git pipenv mysql gettext
 ```
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
-```sh
-brew install mysql
-```
-
-```sh
-brew install gettext
-```
 
 ## Installing prerequisites on other platforms
 
 Find a way to install the software on this list (click the links to find installer downloads):
 
 * [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-* [python](https://www.python.org/downloads/) 3.9
+* [python](https://www.python.org/downloads/) 3.11
 * [gettext](https://www.gnu.org/software/gettext/) for translation editing and compiling
 * [MySQL C API (libmysqlclient)](https://dev.mysql.com/downloads/c-api/)
 * [pipenv](https://github.com/pypa/pipenv)
@@ -81,6 +79,10 @@ cd mulysa
 pipenv sync --dev
 pipenv shell
 ```
+
+If pipenv sync asks to run pipenv lock, run it.
+
+If pipenv sync fails due to wrong Python version, change it in Pipfile, delete Pipfile.lock and try again.
 
 Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
 
@@ -97,23 +99,36 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ./manage.py runserver
 ```
 
+## To create an initial superuser account
+
+```bash
+./manage.py createsuperuser
+```
+
 ## To update localizations
 
 Always start everything by opening the pipenv shell for this project first! (`pipenv shell`) or by prepending individual commands with (`pipenv run`) for system users that does not have shell access normally.
 
 ```bash
-./manage.py makemessages -l fi
+./manage.py makemessages -l fi --no-obsolete
 ```
 
-Edit the .po files
+Check what is missing (www and users are required, other apps are warnings):
 
 ```bash
+./manage.py check_translations --require www users
+```
+
+Edit the .po files, then verify and compile:
+
+```bash
+./manage.py check_translations --require www users
 ./manage.py compilemessages
 ```
 
 Push only the .po files to git, not .mo's!
 
-# to update dependecies
+# to update dependencies
 
 run:
 
@@ -169,7 +184,7 @@ There are multiple api endpoints for checking door access: One phone number, nfc
 
 Phone number based access is based on the users phone number and they must have a active subscription to the default service (on a default installation this would be serviceid=2 "tilankäyttöoikeus"). User can also have multiple NFC cards that check the same service access.
 
-All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
+All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with different levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
 
 Examples:
 

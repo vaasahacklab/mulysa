@@ -15,7 +15,8 @@ import markdown
 from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
-from drfx import settings
+from drfx import config
+from utils.matrixoperations import MatrixOperations
 from users.models import (
     BankTransaction,
     CustomInvoice,
@@ -40,7 +41,7 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
-
+from django.core.mail import send_mail
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -113,8 +114,6 @@ def dataimport(request):
         form = FileImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
-            if request.POST["filetype"] == "M":
-                report = dataimport.importmembers(request.FILES["file"])
             if request.POST["filetype"] == "TITO":
                 report = dataimport.import_tito(request.FILES["file"])
             if request.POST["filetype"] == "HOLVI":
@@ -237,11 +236,17 @@ def userdetails(request, id):
         "www/user.html",
         {
             "userdetails": userdetails,
-            "bank_iban": settings.ACCOUNT_IBAN,
+            "bank_iban": config.ACCOUNT_IBAN,
+            "bank_bic": config.ACCOUNT_BIC,
+            "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
+            "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
         },
     )
 
+@login_required
+def mydetails(request):
+    return userdetails(request, request.user.id)
 
 @login_required
 @self_or_staff_member_required
@@ -274,6 +279,7 @@ def usersettings(request, id):
             granted=False,
             nfccard=None,
             claimed_by=None,
+            method='nfc',
             date__gte=timezone.now() - timedelta(minutes=5),
         )
         .exclude(payload__isnull=True)
@@ -289,8 +295,30 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
+            "show_send_email": request.user.is_staff,
+            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
+            "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
+            "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
         },
     )
+
+@login_required
+def mysettings(request):
+    return usersettings(request, request.user.id)
+
+
+@login_required
+@self_or_staff_member_required
+def usersettings_matrixinvite(request, id):
+    """
+    Invite user to matrix room/space
+    """
+    customuser = get_object_or_404(CustomUser, id=id)
+    mxid = customuser.mxid
+    mo = MatrixOperations(config.MATRIX_ACCESS_TOKEN, config.MATRIX_SERVER)
+    mo.invite_user(mxid, config.MATRIX_ROOM_ID, _("Welcome to member's Matrix space"))
+    messages.success(request, _("You have been invited"))
+    return userdetails(request, id)
 
 
 @login_required
@@ -382,6 +410,30 @@ def usersettings_claim_nfc(request, id):
 
 
 @login_required
+@staff_member_required
+def usersettings_send_mail(request, id):
+    """
+    Send e-mail to this user
+    """
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST":
+        send_mail(
+            request.POST['subject'],
+            request.POST['content'],
+            config.NOREPLY_FROM_ADDRESS,
+            [customuser.email],
+            fail_silently=False,
+        )
+
+        customuser.log(f"Sent e-mail to {customuser.email}: {request.POST['subject']}: {request.POST['content']}")
+
+        messages.success(request, _("E-mail sent"))
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+
+@login_required
 @self_or_staff_member_required
 def usersettings_delete_nfc(request, id):
     """
@@ -439,7 +491,7 @@ def custominvoice(request):
                 )
                 invoice.save()
                 invoice.reference_number = referencenumber.generate(
-                    settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
+                    config.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
                 )
                 invoice.save()
     else:
@@ -457,7 +509,8 @@ def custominvoice(request):
             "days": days,
             "amount": amount,
             "servicename": servicename,
-            "settings": settings,
+            "account_iban": config.ACCOUNT_IBAN,
+            "config": config,
         },
     )
 
@@ -498,7 +551,7 @@ def banktransaction_view(request, banktransactionid):
         "www/banktransaction.html",
         {
             "banktransaction": banktransaction,
-            "settings": settings,
+            "config": config,
         },
     )
 
@@ -509,7 +562,7 @@ def updateuser(request):
     if request.method == "POST":
         user = get_object_or_404(CustomUser, id=request.POST["userid"])
         BusinessLogic.updateuser(user)
-        messages.success(request, _(f"Updateuser ran for user {user}"))
+        messages.success(request, _("Updateuser ran for user: %(user)s" % {"user": user}))
     return HttpResponseRedirect(reverse("users"))
 
 

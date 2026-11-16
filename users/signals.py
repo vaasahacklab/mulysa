@@ -1,6 +1,5 @@
 import logging
-
-from django.conf import settings
+from drfx import config
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.db.models.signals import post_save, pre_save
@@ -8,10 +7,10 @@ from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
-
 from utils import referencenumber
-
 from . import models
+
+from django.contrib.sites.models import Site
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +63,7 @@ def service_subscription_create(
     if created:
         if instance.reference_number is None:
             refnum = referencenumber.generate(
-                settings.SERVICE_INVOICE_REFERENCE_BASE + instance.id
+                config.SERVICE_INVOICE_REFERENCE_BASE + instance.id
             )
             instance.reference_number = refnum
             instance.save()
@@ -79,7 +78,7 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     When user is created send the reset password email
     """
     form = PasswordResetForm({"email": instance.email})
-    from_email = getattr(settings, "NOREPLY_FROM_ADDRESS", "noreply@tampere.hacklab.fi")
+    from_email = config.NOREPLY_FROM_ADDRESS
     template = "registration/password_reset_email.html"
     form.is_valid()
     form.save(from_email=from_email, email_template_name=template)
@@ -121,7 +120,7 @@ def custominvoice_create(
     if created:
         if instance.reference_number is None:
             refnum = referencenumber.generate(
-                settings.CUSTOM_INVOICE_REFERENCE_BASE + instance.id
+                config.CUSTOM_INVOICE_REFERENCE_BASE + instance.id
             )
             instance.reference_number = refnum
             instance.save()
@@ -143,12 +142,13 @@ def send_application_received_email(
     logger.info("Sending thanks for applying membership email to {}".format(instance))
     context = {
         "user": instance.user,
-        "settings": settings,
+        "config": config,
+        "site": Site.objects.get_current(),
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Thank you for applying membership and next steps")
-    from_email = settings.NOREPLY_FROM_ADDRESS
+    from_email = config.NOREPLY_FROM_ADDRESS
     to = instance.user.email
     plaintext_content = render_to_string("mail/application_received.txt", context)
 
@@ -167,11 +167,12 @@ def send_new_application_waiting_processing_email(
     )
     context = {
         "user": instance.user,
-        "settings": settings,
+        "site": Site.objects.get_current(),
+        "config": config,
     }
     subject = _("New membership application received")
-    from_email = settings.NOREPLY_FROM_ADDRESS
-    to = settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS
+    from_email = config.NOREPLY_FROM_ADDRESS
+    to = config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS
     plaintext_content = render_to_string("mail/new_application.txt", context)
 
     send_mail(subject, plaintext_content, from_email, [to])
@@ -186,15 +187,18 @@ def send_application_approved_email(
             instance, instance.user.language
         )
     )
+
     context = {
         "user": instance.user,
-        "settings": settings,
+        "config": config,
+        "site": Site.objects.get_current(),
     }
+
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
-    from_email = settings.NOREPLY_FROM_ADDRESS
-    to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+    from_email = config.NOREPLY_FROM_ADDRESS
+    to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
     plaintext_content = render_to_string("mail/welcome_and_next_steps.txt", context)
 
     send_mail(subject, plaintext_content, from_email, to)
@@ -205,15 +209,14 @@ def send_application_denied_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
-    context = {
-        "user": instance.user,
-        "settings": settings,
-    }
+
+    context = {"user": instance.user, "config": config}
+
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
-    from_email = settings.NOREPLY_FROM_ADDRESS
-    to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+    from_email = config.NOREPLY_FROM_ADDRESS
+    to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
     plaintext_content = render_to_string("mail/application_rejected.txt", context)
 
     send_mail(subject, plaintext_content, from_email, to)
@@ -250,6 +253,54 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         logger.info("User deactivation done {}".format(instance))
 
 
+@receiver(pre_save, sender=models.CustomUser)
+def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwargs):
+    """
+    Send email to user that their account has now been marked for deletion and
+    deactivated and will be completely removed after a while
+    """
+    # do nothing for raw or created signals
+    if raw:
+        return
+
+    # if our value didn't change then nothign to be done
+    try:
+        previous = models.CustomUser.objects.get(id=instance.id)
+    except models.CustomUser.DoesNotExist:
+        # new user, it wont be activated or deactived yet
+        return
+
+    # already set, no need to do again
+    if previous.marked_for_deletion_on:
+        return
+
+    if instance.marked_for_deletion_on:
+        # so the field was changed, mark the user is_active=False and send and email too
+        logger.info(
+            "User marked for deletion, also changing active to false and informing the user {}".format(
+                instance
+            )
+        )
+        instance.is_active = False
+
+        # and send the email
+        context = {"user": instance, "config": config}
+
+        translation.activate(instance.language)
+        # TODO: maybe move this subject to settings?
+        subject = _("Your account has been deactivated and marked for deletion")
+        from_email = config.NOREPLY_FROM_ADDRESS
+        to = [instance.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+        plaintext_content = render_to_string(
+            "mail/account_deactivated_and_marked_for_deletion.txt", context
+        )
+
+        send_mail(subject, plaintext_content, from_email, to)
+
+        # Add to activity log
+        instance.log("Marked for deletion email sent")
+
+
 #
 # Signal door access denied
 #
@@ -264,12 +315,13 @@ door_access_denied = Signal()
 def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kwargs):
     context = {
         "user": user,
-        "settings": settings,
         "method": method,
+        "config": config,
+        "site": Site.objects.get_current(),
     }
     translation.activate(user.language)
     subject = _("Door access denied")
-    from_email = settings.NOREPLY_FROM_ADDRESS
+    from_email = config.NOREPLY_FROM_ADDRESS
     to = [user.email]
     plaintext_content = render_to_string("mail/door_access_denied.txt", context)
     send_mail(subject, plaintext_content, from_email, to, fail_silently=True)

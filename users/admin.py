@@ -1,9 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils import timezone
+from django.db.models import Count
 
 from rangefilter.filters import DateRangeFilter
 
-from .filters import PredefAgeListFilter
+from .filters import (
+    PredefAgeListFilter,
+    MarkedForDeletionFilter,
+    ServiceSubscriptionCountFilter,
+)
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import (
     BankTransaction,
@@ -14,6 +20,7 @@ from .models import (
     NFCCard,
     ServiceSubscription,
     UsersLog,
+    Statistics,
 )
 
 
@@ -27,6 +34,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
+
     ordering = (
         "first_name",
         "last_name",
@@ -37,9 +45,7 @@ class CustomUserAdmin(UserAdmin):
         "last_name",
         "nick",
         "mxid",
-        "language",
-        "municipality",
-        "age_years",
+        "marked_for_deletion_on",
         "is_active",
         "is_staff",
         "is_superuser",
@@ -48,10 +54,12 @@ class CustomUserAdmin(UserAdmin):
     list_filter = (
         "is_active",
         "is_staff",
+        MarkedForDeletionFilter,
         "language",
         "municipality",
         PredefAgeListFilter,
         ("birthday", DateRangeFilter),
+        ServiceSubscriptionCountFilter,
     )
     readonly_fields = (
         "age_years",
@@ -85,7 +93,54 @@ class CustomUserAdmin(UserAdmin):
             {"fields": ("birthday",) + readonly_fields + ("marked_for_deletion_on",)},
         ),
     )
+
+    add_fieldsets = (
+        (
+            "Data",
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "nick",
+                    "mxid",
+                    "language",
+                    "municipality",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "phone",
+                    "bank_account",
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
+        (
+            "Dates",
+            {
+                "classes": ("wide",),
+                "fields": ("birthday",),
+            },
+        ),
+    )
+
     inlines = [ServiceSubscriptionInline]
+
+    actions = ["mark_for_deletion_on", "mark_for_deletion_off"]
+
+    def mark_for_deletion_on(self, request, queryset):
+        queryset.update(marked_for_deletion_on=timezone.now())
+
+    mark_for_deletion_on.short_description = "Mark selected users for deletion"
+
+    def mark_for_deletion_off(self, request, queryset):
+        queryset.update(marked_for_deletion_on=None)
+
+    mark_for_deletion_off.short_description = (
+        "Remove mark for deletion from selected users"
+    )
 
 
 class NFCCardAdmin(admin.ModelAdmin):
@@ -112,6 +167,50 @@ class MemberServiceAdmin(admin.ModelAdmin):
     list_display = ["name", "cost", "pays_also_service", "accounting_id"]
 
 
+class AmountDirectionFilter(admin.SimpleListFilter):
+    title = "Transaction Type"
+    parameter_name = "type"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("deposit", "Deposits"),
+            ("withdrawal", "Withdrawals"),
+            ("zero", "Zero amount"),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "deposit":
+            return queryset.filter(amount__gt=0)
+        if value == "withdrawal":
+            return queryset.filter(amount__lt=0)
+        if value == "zero":
+            return queryset.filter(amount=0)
+        return queryset
+
+
+class DuplicateTransactionIdFilter(admin.SimpleListFilter):
+    title = "Duplicate Archival reference"
+    parameter_name = "duplicate_archival_reference"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("yes", "Has duplicates"),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "yes":
+            duplicates = (
+                queryset.values("archival_reference")
+                .annotate(txn_count=Count("id"))
+                .filter(txn_count__gt=1)
+                .values_list("archival_reference", flat=True)
+            )
+            return queryset.filter(archival_reference__in=list(duplicates))
+        return queryset
+
+
 class BankTransactionAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -123,7 +222,12 @@ class BankTransactionAdmin(admin.ModelAdmin):
         "sender",
         "has_been_used",
     ]
-    list_filter = ("has_been_used", "date")
+    list_filter = (
+        AmountDirectionFilter,
+        "has_been_used",
+        "date",
+        DuplicateTransactionIdFilter,
+    )
     ordering = ("-date",)
     search_fields = (
         "user__email",
@@ -147,6 +251,26 @@ class CustomInvoiceAdmin(admin.ModelAdmin):
     ]
 
 
+class StatisticsAdmin(admin.ModelAdmin):
+    """
+    Allow only viewing statistics in admin
+    """
+
+    list_display = [
+        field.name for field in Statistics._meta.fields if field.name != "id"
+    ]
+
+    date_hierarchy = "date"
+    list_display_links = None
+    actions = None
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
 admin.site.register(MemberService, MemberServiceAdmin)
@@ -155,3 +279,4 @@ admin.site.register(BankTransaction, BankTransactionAdmin)
 admin.site.register(CustomInvoice, CustomInvoiceAdmin)
 admin.site.register(UsersLog)
 admin.site.register(NFCCard, NFCCardAdmin)
+admin.site.register(Statistics, StatisticsAdmin)
